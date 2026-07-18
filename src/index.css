@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream text-ink font-body antialiased;
+    overflow-x: hidden;
+  }
+  * {
+    @apply box-border;
+  }
+  img,
+  svg,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+  button,
+  a {
+    touch-action: manipulation;
+  }
+  ::selection {
+    background: #f5711b;
+    color: #fafafa;
+  }
+}
+
+/* ---------- outlined display type ---------- */
+.text-outline {
+  -webkit-text-stroke: 2px #111111;
+  color: transparent;
+}
+.text-outline-cream {
+  -webkit-text-stroke: 2px rgba(250, 250, 250, 0.85);
+  color: transparent;
+}
+
+@media (max-width: 480px) {
+  .text-outline {
+    -webkit-text-stroke: 1.4px #111111;
+  }
+}
+
+/* ---------- nav underline draw ---------- */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1.5px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ---------- scroll badge rotation ---------- */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* ---------- checkerboard dot pattern (about section) ---------- */
+.dot-grid {
+  background-image: radial-gradient(rgba(250, 250, 250, 0.14) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+.dot-grid-dark {
+  background-image: radial-gradient(rgba(17, 17, 17, 0.12) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+
+/* ---------- form hairline underlines ---------- */
+.field-line {
+  position: relative;
+}
+.field-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: #f5711b;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.field-line:focus-within::after {
+  transform: scaleX(1);
+}
+
+/* ---------- custom cursor ---------- */
+@media (pointer: fine) {
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 9999px;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: #f5711b;
+  }
+  .cursor-ring {
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid rgba(245, 113, 27, 0.7);
+    transition:
+      width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.25s;
+    opacity: 0;
+  }
+  .cursor-ring.is-active {
+    opacity: 1;
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* ---------- image fade-in ---------- */
+.img-fade {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.img-fade.loaded {
+  opacity: 1;
+}
