@@ -43,12 +43,6 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <a
-            href="#"
-            className="hidden rounded-full bg-ink px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-paper transition-colors duration-300 ease-exhale hover:bg-signal sm:inline-flex sm:px-6 sm:text-xs"
-          >
-            Download CV
-          </a>
           <button
             className="flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 bg-cream/80 p-0 text-ink lg:hidden"
             onClick={() => setOpen((v) => !v)}
