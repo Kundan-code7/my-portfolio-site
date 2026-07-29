@@ -43,6 +43,13 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <a
+            href="/resume.docx"
+            download="Kundan_Resume.docx"
+            className="hidden rounded-full border border-ink/10 bg-cream/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-ink transition-colors hover:bg-ink/5 sm:inline-flex lg:inline-flex"
+          >
+            Resume
+          </a>
           <button
             className="flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 bg-cream/80 p-0 text-ink lg:hidden"
             onClick={() => setOpen((v) => !v)}
