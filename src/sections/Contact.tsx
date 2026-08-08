@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Send } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { supabase } from "../lib/supabase";
 
+const CHAR_LIMIT = 300;
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
+  const [charCount, setCharCount] = useState(0);
+  const messageRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -17,9 +22,23 @@ export default function Contact() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    const { name, value } = e.target;
+    let nextValue = value;
+
+    if (name === "message") {
+      if (nextValue.length > CHAR_LIMIT) {
+        nextValue = nextValue.slice(0, CHAR_LIMIT);
+      }
+      setCharCount(nextValue.length);
+      if (messageRef.current) {
+        messageRef.current.style.height = "auto";
+        messageRef.current.style.height = `${messageRef.current.scrollHeight}px`;
+      }
+    }
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: nextValue,
     });
   };
 
@@ -34,6 +53,7 @@ export default function Contact() {
         {
           name: formData.name,
           email: formData.email,
+          phone: formData.phone || null,
           message: formData.message,
         },
       ]);
@@ -55,8 +75,10 @@ export default function Contact() {
     setFormData({
       name: "",
       email: "",
+      phone: "",
       message: "",
     });
+    setCharCount(0);
   };
 
   return (
@@ -215,20 +237,45 @@ export default function Contact() {
 
               <div>
                 <label
+                  htmlFor="phone"
+                  className="text-sm font-bold uppercase tracking-[0.2em] text-paper/40"
+                >
+                  Phone (optional)
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Your phone number"
+                  className="mt-2 w-full bg-transparent py-2 text-base text-paper outline-none placeholder:text-paper/25 sm:text-lg"
+                />
+                <div className="mt-2 h-px w-full bg-paper/10" />
+              </div>
+
+              <div>
+                <label
                   htmlFor="message"
                   className="text-sm font-bold uppercase tracking-[0.2em] text-paper/40"
                 >
                   Message
                 </label>
                 <textarea
+                  ref={messageRef}
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={4}
+                  rows={3}
                   placeholder="Tell me about your project..."
                   className="mt-2 w-full resize-none bg-transparent py-2 text-base text-paper outline-none placeholder:text-paper/25 sm:text-lg"
                 />
+                {CHAR_LIMIT - charCount <= 20 && charCount > 0 ? (
+                  <div className="mt-3 flex items-center justify-between text-xs text-paper/50">
+                    <span>{CHAR_LIMIT - charCount} characters left</span>
+                    <span>Max {CHAR_LIMIT} chars</span>
+                  </div>
+                ) : null}
                 <div className="mt-2 h-px w-full bg-paper/10" />
               </div>
 
