@@ -5,7 +5,6 @@ import { ExternalLink, Briefcase, Award, ChevronDown, ChevronUp } from "lucide-r
 interface Internship {
   id: string;
   title: string;
-  company: string;
   role: string;
   duration: string;
   description: string;
@@ -28,7 +27,6 @@ const INTERNSHIPS: Internship[] = [
   {
     id: "internship-kundan",
     title: "Software Development Internship",
-    company: "Professional Organization",
     role: "Software Developer Intern",
     duration: "2024",
     description:
@@ -173,9 +171,6 @@ function InternshipCard({ item, index }: { item: Internship; index: number }) {
           <h3 className="mt-5 font-display text-[clamp(1.3rem,3vw,1.9rem)] uppercase leading-tight text-ink">
             {item.title}
           </h3>
-          <p className="mt-1.5 text-sm font-semibold uppercase tracking-[0.1em] text-signal">
-            {item.company}
-          </p>
           <p className="mt-0.5 text-xs uppercase tracking-[0.1em] text-ink/50">
             {item.role} &middot; {item.duration}
           </p>
