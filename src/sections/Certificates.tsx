@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Briefcase, Award, ChevronDown, ChevronUp } from "lucide-react";
 
@@ -32,7 +32,7 @@ const INTERNSHIPS: Internship[] = [
     role: "Software Developer Intern",
     duration: "2024",
     description:
-      "Hands-on professional experience building real-world software applications. Gained practical exposure to industry workflows, collaborative development, and applied computer science in a production environment.",
+      "Completed a six-week Summer Internship in Web Development, gaining practical experience in web development as part of the Computer Technology curriculum under MSBTE.",
     preview: "/certificates/internship.webp",
     pdf: "/certificates/Kundan Internship certificate.pdf",
   },
@@ -62,15 +62,6 @@ const DEFAULT_CERTS: Certificate[] = [
 
 // Hidden until "Show All" -- ordered by portfolio relevance
 const EXTRA_CERTS: Certificate[] = [
-  {
-    id: "genai",
-    title: "What Is Generative AI",
-    issuer: "LinkedIn Learning",
-    year: "2024",
-    category: "AI / Machine Learning",
-    preview: "/certificates/genai-certificate.webp",
-    pdf: "/certificates/CertificateOfCompletion_What Is Generative AI.pdf",
-  },
   {
     id: "genai-2",
     title: "Generative AI - Advanced",
