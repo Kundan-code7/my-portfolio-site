@@ -26,8 +26,8 @@ interface Certificate {
 const INTERNSHIPS: Internship[] = [
   {
     id: "internship-kundan",
-    title: "Software Development Internship",
-    role: "Software Developer Intern",
+    title: "Web Development Internship",
+    role: "Web Developer Intern",
     duration: "2024",
     description:
       "Completed a six-week Summer Internship in Web Development, gaining practical experience in web development as part of the Computer Technology curriculum under MSBTE.",
