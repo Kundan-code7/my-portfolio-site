@@ -24,8 +24,21 @@ import project3Img3 from "../assets/project 3-3.webp";
 import project3Img4 from "../assets/project 3-4.webp";
 import project3Img5 from "../assets/project 3-5.webp";
 import project3Img6 from "../assets/project 3-6.webp";
+import project4Img1 from "../assets/project 4-1.png";
+import project4Img2 from "../assets/project 4-2.png";
+import project4Img3 from "../assets/project 4-3.png";
 
-const PROJECTS = [
+type ProjectLink = { label: string; href: string; primary?: boolean };
+
+const PROJECTS: {
+  category: string;
+  accent: string;
+  name: string;
+  description: string;
+  images: string[];
+  links?: ProjectLink[];
+  isPortrait?: boolean;
+}[] = [
   {
     category: "React / Supabase / Gemini API",
     accent: "from-signal/80 to-signal/20",
@@ -65,6 +78,27 @@ const PROJECTS = [
       project3Img6,
     ],
   },
+  {
+    category: "Kotlin · Android · CameraX · Foreground Service · MP4 · Microphone · Notifications · Gradle",
+    accent: "from-signal/70 to-ink/40",
+    name: "[CatEye]",
+    description:
+      "CatEye is an Android background video recorder built with Kotlin and CameraX, designed to provide reliable video recording even when the device screen is locked or turned off. The app uses Android foreground services for continuous recording, supports video with microphone audio, and provides a simple gallery and playback experience.",
+    images: [project4Img1, project4Img2, project4Img3],
+    isPortrait: true,
+    links: [
+      {
+        label: "Download / View Release",
+        href: "https://github.com/Kundan-code7/Cateye/releases/tag/v1.0.0",
+        primary: true,
+      },
+      {
+        label: "Watch Demo",
+        href: "https://lnkd.in/p/dtiUCzpp",
+        primary: false,
+      },
+    ],
+  },
 ];
 
 function BrowserMockupPlaceholder({ accent }: { accent: string }) {
@@ -86,9 +120,11 @@ function BrowserMockupPlaceholder({ accent }: { accent: string }) {
 function ProjectCarousel({
   images,
   accent,
+  isPortrait = false,
 }: {
   images: string[];
   accent: string;
+  isPortrait?: boolean;
 }) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -133,31 +169,61 @@ function ProjectCarousel({
         <span className="ml-3 h-5 flex-1 rounded-full bg-ink/5" />
       </div>
 
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <div
+        className={`relative overflow-hidden ${
+          isPortrait
+            ? "flex items-center justify-center bg-ink/5 py-6"
+            : "aspect-[16/10]"
+        }`}
+      >
         {!hasImages ? (
           <BrowserMockupPlaceholder accent={accent} />
         ) : (
           <>
             <div className={`absolute inset-x-0 top-0 z-10 h-1 bg-gradient-to-r ${accent}`} />
 
-            <AnimatePresence initial={false} custom={direction} mode="wait">
-              <motion.img
-                key={index}
-                src={images[index]}
-                alt={`Project screenshot ${index + 1}`}
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.6}
-                onDragEnd={handleDragEnd}
-                className="absolute inset-0 h-full w-full cursor-grab object-cover active:cursor-grabbing"
-              />
-            </AnimatePresence>
+            {isPortrait ? (
+              /* Portrait mode: natural phone-screenshot presentation */
+              <div className="relative flex w-full items-center justify-center px-6 sm:px-10">
+                <AnimatePresence initial={false} custom={direction} mode="wait">
+                  <motion.img
+                    key={index}
+                    src={images[index]}
+                    alt={`Project screenshot ${index + 1}`}
+                    custom={direction}
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.6}
+                    onDragEnd={handleDragEnd}
+                    className="max-h-[420px] w-auto cursor-grab rounded-2xl object-contain shadow-[0_8px_32px_rgba(17,17,17,0.18)] active:cursor-grabbing sm:max-h-[480px]"
+                  />
+                </AnimatePresence>
+              </div>
+            ) : (
+              <AnimatePresence initial={false} custom={direction} mode="wait">
+                <motion.img
+                  key={index}
+                  src={images[index]}
+                  alt={`Project screenshot ${index + 1}`}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.6}
+                  onDragEnd={handleDragEnd}
+                  className="absolute inset-0 h-full w-full cursor-grab object-cover active:cursor-grabbing"
+                />
+              </AnimatePresence>
+            )}
 
             {/* prev / next arrows — visible on hover */}
             {images.length > 1 && (
@@ -220,7 +286,7 @@ export default function Projects() {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.05 * i }}
               className="group grid items-center gap-6 rounded-2xl border border-ink/10 bg-cream p-4 transition-all duration-300 ease-exhale hover:-translate-y-1 hover:shadow-[0_24px_48px_rgba(17,17,17,0.10)] sm:p-8 lg:grid-cols-[1.2fr_1fr] lg:gap-12"
             >
-              <ProjectCarousel images={p.images} accent={p.accent} />
+              <ProjectCarousel images={p.images} accent={p.accent} isPortrait={p.isPortrait} />
               <div>
                 <span className="inline-block rounded-full bg-signal px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper">
                   {p.category}
@@ -229,6 +295,34 @@ export default function Projects() {
                   {p.name}
                 </h3>
                 <p className="mt-4 text-sm leading-relaxed text-ink/60 sm:text-[15px] lg:text-base">{p.description}</p>
+
+                {p.links && p.links.length > 0 && (
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    {p.links.map((link) =>
+                      link.primary ? (
+                        <a
+                          key={link.href}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full bg-signal px-5 py-2 text-[12px] font-bold uppercase tracking-[0.14em] text-paper transition-all duration-300 ease-exhale hover:-translate-y-0.5 hover:bg-signal/90 hover:shadow-[0_8px_24px_rgba(17,17,17,0.18)]"
+                        >
+                          {link.label}
+                        </a>
+                      ) : (
+                        <a
+                          key={link.href}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full border border-ink/20 bg-cream px-5 py-2 text-[12px] font-bold uppercase tracking-[0.14em] text-ink transition-all duration-300 ease-exhale hover:-translate-y-0.5 hover:border-ink/40 hover:shadow-[0_8px_24px_rgba(17,17,17,0.10)]"
+                        >
+                          {link.label}
+                        </a>
+                      )
+                    )}
+                  </div>
+                )}
               </div>
             </motion.article>
           ))}
