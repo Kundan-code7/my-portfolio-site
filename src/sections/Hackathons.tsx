@@ -7,6 +7,8 @@ import hackImg1 from "../assets/Hackaton 1-1.jpeg";
 import hackImg2 from "../assets/Hackaton 1-2.png";
 import hackImg3 from "../assets/Hackaton 1-3.png";
 
+const hackCertImg = "/certificates/hackaton  certificate img.jpg";
+
 const HACKATHONS = [
   {
     badge: "Ideation '26",
@@ -21,7 +23,8 @@ const HACKATHONS = [
       { name: "Chinmay Rahate", href: "https://www.linkedin.com/in/chinmay-m-rahate/" },
       { name: "Viraj Yadav" },
     ],
-    images: [hackImg1, hackImg2, hackImg3],
+    // certificate is index 0 (first slide), then event photos
+    images: [hackCertImg, hackImg1, hackImg2, hackImg3],
   },
 ];
 
@@ -100,9 +103,8 @@ function HackGallery({ images, accent }: { images: string[]; accent: string }) {
                   type="button"
                   aria-label={`Go to photo ${i + 1}`}
                   onClick={() => goTo(i)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ease-exhale ${
-                    i === index ? "w-4 bg-signal" : "w-1.5 bg-ink/20 hover:bg-ink/40"
-                  }`}
+                  className={`h-1.5 rounded-full transition-all duration-300 ease-exhale ${i === index ? "w-4 bg-signal" : "w-1.5 bg-ink/20 hover:bg-ink/40"
+                    }`}
                 />
               ))}
             </div>
